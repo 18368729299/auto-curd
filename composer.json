@@ -1,0 +1,26 @@
+{
+    "name": "cbs/tp6-curd",
+    "description": "基于thinkphp6的一键curd库 自用",
+    "require": {
+        "php": ">=7.1",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "topthink/framework": "^6.0.0",
+        "symfony/var-exporter": "^5.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CBS",
+            "email": "576758424@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "nickbai\\tp6curd\\": "src"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    }
+}
