@@ -1,9 +1,9 @@
 <?php
 
-namespace nickbai\tp6curd\template\impl;
+namespace cbs\tp6curd\template\impl;
 
-use nickbai\tp6curd\extend\Utils;
-use nickbai\tp6curd\template\IAutoMake;
+use cbs\tp6curd\extend\Utils;
+use cbs\tp6curd\template\IAutoMake;
 use Symfony\Component\VarExporter\VarExporter;
 use think\console\Output;
 use think\facade\App;

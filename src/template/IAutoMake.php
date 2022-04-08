@@ -4,7 +4,7 @@
  * Date: 2021/7/8
  * Time: 10:46 PM
  */
-namespace nickbai\tp6curd\template;
+namespace cbs\tp6curd\template;
 
 interface IAutoMake
 {

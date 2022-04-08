@@ -6,12 +6,12 @@
  * Time: 8:23 PM
  */
 
-namespace nickbai\tp6curd\command;
+namespace cbs\tp6curd\command;
 
-use nickbai\tp6curd\strategy\AutoMakeStrategy;
-use nickbai\tp6curd\template\impl\ControllerAutoMake;
-use nickbai\tp6curd\template\impl\ModelAutoMake;
-use nickbai\tp6curd\template\impl\ValidateAutoMake;
+use cbs\tp6curd\strategy\AutoMakeStrategy;
+use cbs\tp6curd\template\impl\ControllerAutoMake;
+use cbs\tp6curd\template\impl\ModelAutoMake;
+use cbs\tp6curd\template\impl\ValidateAutoMake;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;

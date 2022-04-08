@@ -3,7 +3,7 @@
 
 ### 如何安装
 ```php
-composer require nickbai/tp6-curd
+composer require cbs/tp6-curd
 ```
 
 ### 如何使用
