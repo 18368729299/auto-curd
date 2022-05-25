@@ -3,9 +3,14 @@
 namespace app<namespace>model;
 
 use think\model;
+<SoftDelete>
 
 class <model> extends Model
 {
+    <UseSoftDelete>
+    <SoftDeleteField>
+    <SoftDeleteType>
+
     /**
     * 获取分页列表
     * @param $where
@@ -16,12 +21,12 @@ class <model> extends Model
     {
         try {
 
-            $list = $this->where($where)->order('<pk>', 'desc')->paginate($limit);
+            $list = $this->where($where)->order('<pk>', 'desc')->hidden([<HiddenField>])->paginate($limit);
         } catch(\Exception $e) {
-            return dataReturn(-1, $e->getMessage());
+            return dataReturn(false, $e->getMessage());
         }
 
-        return dataReturn(0, 'success', $list);
+        return dataReturn(true, 'success', $list);
     }
 
     /**
@@ -35,14 +40,15 @@ class <model> extends Model
 
            // TODO 去重校验
 
-           $param['add_time'] = date('Y-m-d H:i:s');
-           $this->insert($param);
+           $param['addtime'] = date('Y-m-d H:i:s');
+           $param['edittime'] = date('Y-m-d H:i:s');
+           $this->save($param);
         } catch(\Exception $e) {
 
-           return dataReturn(-1, $e->getMessage());
+           return dataReturn(false, $e->getMessage());
         }
 
-        return dataReturn(0, 'success');
+        return dataReturn(true, 'success');
     }
 
     /**
@@ -54,13 +60,15 @@ class <model> extends Model
     {
         try {
 
-            $info = $this->where('<pk>', $id)->find();
+            $info = $this->where('<pk>', $id)->hidden([<HiddenField>])->find();
         } catch(\Exception $e) {
 
-            return dataReturn(-1, $e->getMessage());
+            return dataReturn(false, $e->getMessage());
         }
-
-        return dataReturn(0, 'success', $info);
+        if (!$info) {
+            return dataReturn(false, '数据不存在');
+        }
+        return dataReturn(true, 'success', $info);
     }
 
     /**
@@ -70,38 +78,20 @@ class <model> extends Model
     */
     public function edit<model>($param)
     {
+        info = $this->find($param['id']);
+        if (!$info) {
+            return dataReturn(false, '数据不存在');
+        }
         try {
-
             // TODO 去重校验
-
-            $param['update_time'] = date('Y-m-d H:i:s');
-            $this->where('<pk>', $param['<pk>'])->update($param);
+            $param['edittime'] = date('Y-m-d H:i:s');
+            $info->save($param);
         } catch(\Exception $e) {
 
-            return dataReturn(-1, $e->getMessage());
+            return dataReturn(false, $e->getMessage());
         }
 
-        return dataReturn(0, 'success');
-    }
-
-    /**
-    * 删除信息
-    * @param $id
-    * @return array
-    */
-    public function del<model>ById($id)
-    {
-        try {
-
-            // TODO 不可删除校验
-
-            $this->where('<pk>', $id)->delete();
-         } catch(\Exception $e) {
-
-            return dataReturn(-1, $e->getMessage());
-         }
-
-        return dataReturn(0, 'success');
+        return dataReturn(true, 'success');
     }
 }
 

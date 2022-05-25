@@ -9,4 +9,6 @@ class <model>Validate extends ExtendValidate
     protected $rule = <rule>;
 
     protected $attributes = <attributes>;
+
+    protected $scene = <scene>;
 }

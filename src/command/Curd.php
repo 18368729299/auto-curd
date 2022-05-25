@@ -26,6 +26,7 @@ class Curd extends Command
             ->addOption('name', 'c', Option::VALUE_OPTIONAL, 'the controller name', null)
             ->addOption('path', 'p', Option::VALUE_OPTIONAL, 'the path', null)
             ->addOption('force', 'f', Option::VALUE_OPTIONAL, 'is force', null)
+            ->addOption('soft', 's', Option::VALUE_OPTIONAL, 'is force', null)
             ->setDescription('auto make curd file');
     }
 
@@ -47,6 +48,10 @@ class Curd extends Command
         if (!$path) {
             $path = '';
         }
+        $soft = $input->getOption('soft');
+        if (!$soft) {
+            $soft = false;
+        }
 
         $force = $input->getOption('force');
 
@@ -58,7 +63,7 @@ class Curd extends Command
 
         // 执行生成model策略
         $context->Context(new ModelAutoMake());
-        $context->executeStrategy($table, $path, '', $force);
+        $context->executeStrategy($table, $path, $soft, $force);
 
         // 执行生成validate策略
         $context->Context(new ValidateAutoMake());

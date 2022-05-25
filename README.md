@@ -6,7 +6,7 @@
 composer require cbs/tp6-curd
 ```
 
-### 如何使用
+### 如何使用 php think curd -t test -c Test -p admin -f 1
 > php think curd -t table名 -c 控制器名 -p 模块名
 
 

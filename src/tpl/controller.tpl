@@ -19,9 +19,9 @@ class <controller> extends Base
             $where = [];
 
             $<model>Model = new <model>Model();
-            $list = $<model>Model->get<model>List($where, $limit);
+            $res = $<model>Model->get<model>List($where, $limit);
 
-            return json(pageReturn($list));
+            return json($this->retJsonFmt($res['code'], $res['msg'], $res['data']));
         }
     }
 
@@ -35,16 +35,15 @@ class <controller> extends Base
             $param = input('post.');
 
             // 检验完整性
-            try {
-                validate(<model>Validate::class)->check($param);
-            } catch (ValidateException $e) {
-                return jsonReturn(-1, $e->getError());
+            $val = new <model>Validate();
+            if (!$val->scene('add')->check($param)) {
+                return json($this->retJsonFmt(false, $val->getError()));
             }
 
             $<model>Model = new <model>Model();
             $res = $<model>Model->add<model>($param);
 
-            return json($res);
+            return json($this->retJsonFmt($res['code'], $res['msg']));
         }
     }
 
@@ -56,9 +55,9 @@ class <controller> extends Base
         $id = input('param.<pk>');
 
         $<model>Model = new <model>Model();
-        $info = $<model>Model->get<model>ById($id);
+        $res = $<model>Model->get<model>ById($id);
 
-        return json($info);
+        return json($this->retJsonFmt($res['code'], $res['msg'], $res['data']));
     }
 
     /**
@@ -71,16 +70,15 @@ class <controller> extends Base
             $param = input('post.');
 
             // 检验完整性
-            try {
-                validate(<model>Validate::class)->check($param);
-            } catch (ValidateException $e) {
-                return jsonReturn(-1, $e->getError());
+            $val = new <model>Validate();
+            if (!$val->scene('edit')->check($param)) {
+                return json($this->retJsonFmt(false, $val->getError()));
             }
 
             $<model>Model = new <model>Model();
             $res = $<model>Model->edit<model>($param);
 
-            return json($res);
+            return json($this->retJsonFmt($res['code'], $res['msg']));  
          }
     }
 
@@ -90,10 +88,16 @@ class <controller> extends Base
     public function del()
     {
         $id = input('param.<pk>');
+        if (!$id) {
+            return json($this->retJsonFmt(false, '参数错误'));
+        }
 
         $<model>Model = new <model>Model();
-        $info = $<model>Model->del<model>ById($id);
-
-        return json($info);
+        $info = $<model>Model->find($id);
+        if(!$info){
+            return json($this->retJsonFmt(false,'数据不存在'));
+        }
+        $info->delete();
+        return json($this->retJsonFmt(true));
    }
 }
